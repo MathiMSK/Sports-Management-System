@@ -50,15 +50,15 @@ const Sports = () => {
         ),
       },
       {
-        Header: "Role Name",
+        Header: "Sports Name",
         accessor: "roleName",
       },
       {
-        Header: "Role Code",
+        Header: "Sports Code",
         accessor: "roleCode",
       },
       {
-        Header: "Status",
+        Header: "Gender",
         accessor: "status",
         disableSortBy: true,
       },
@@ -80,11 +80,6 @@ const Sports = () => {
       textColor = "inherit";
     }
 
-    // let res=getRole()
-    // res.then((data) =>{
-    //   setDatavalue(data)
-    // }
-    // )
   return (
     <DashboardLayout>
         <DashboardNavbar />
@@ -142,7 +137,7 @@ const Sports = () => {
               </Col>
               <Col md={6}>
               {/* <MDBox sx={{paddingLeft:"55px",padding:"55px"}}>  */}
-              <CustomInput name={"Sports Name"}  width={"300px"} placeholder={"Enter Sports name"} />
+              <CustomInput name={"Sports Name"} type="text" style={{width:"300px",marginTop: '5px',}} placeholder={"Enter Sports name"}  />
             {/* </MDBox> */}
             </Col>
             </Row>

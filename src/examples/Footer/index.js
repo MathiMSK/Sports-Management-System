@@ -44,12 +44,14 @@ function Footer({ company, links }) {
 
   return (
     <MDBox
+   
       width="100%"
       display="flex"
       flexDirection={{ xs: "column", lg: "row" }}
       justifyContent="space-between"
       alignItems="center"
       px={1.5}
+    
     >
       <MDBox
         display="flex"
