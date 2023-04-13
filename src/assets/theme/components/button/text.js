@@ -20,7 +20,7 @@ import typography from "assets/theme/base/typography";
 // Material Dashboard 2 React Helper Functions
 import pxToRem from "assets/theme/functions/pxToRem";
 
-const { text, info, secondary, transparent } = colors;
+const { text, info, secondary, transparent,lightorange } = colors;
 const { size } = typography;
 
 const buttonText = {
@@ -96,6 +96,18 @@ const buttonText = {
 
     "&:focus:not(:hover)": {
       color: secondary.focus,
+      boxShadow: "none",
+    },
+  },
+  lightorange: {
+    color: lightorange.main,
+
+    "&:hover": {
+      color: lightorange.main,
+    },
+
+    "&:focus:not(:hover)": {
+      color: lightorange.focus,
       boxShadow: "none",
     },
   },

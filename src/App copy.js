@@ -32,6 +32,7 @@ import createCache from "@emotion/cache";
 
 // Material Dashboard 2 React routes
 import routes from "routes";
+import navigation from './_nav'
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
 
@@ -180,7 +181,7 @@ export default function App() {
             color={sidenavColor}
             brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
             brandName="SEMS"
-            routes={routes}
+            routes={navigation}
             onMouseEnter={handleOnMouseEnter}
             onMouseLeave={handleOnMouseLeave}
           />
@@ -191,7 +192,7 @@ export default function App() {
       {layout === "vr" && <Configurator />}
       <Suspense fallback={loading}>
       <Routes>
-        {getRoutes(routes)}
+        {getRoutes(navigation)}
         {!token && <Route path="*" element={<Navigate to="/authentication/sign-in" />} />}
       </Routes>
       </Suspense>

@@ -1,27 +1,12 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-/**
- * The base colors for the Material Dashboard 2 PRO React.
- * You can add new color using this file.
- * You can customized the colors for the entire Material Dashboard 2 PRO React using thie file.
- */
 
 const colors = {
   background: {
     default: "#f0f2f5",
+  },
+
+  lightorange:{
+    main: "#fab025",
+    focus: "#fab025",
   },
 
   text: {
@@ -107,6 +92,11 @@ const colors = {
       state: "#495361",
     },
 
+    lightorange:{
+      main: "#fab025",
+      state: "#fab025",
+    },
+  
     info: {
       main: "#49a3f1",
       state: "#1A73E8",
@@ -216,6 +206,11 @@ const colors = {
       text: "#095bc6",
     },
 
+    lightorange:{
+      background: "#fab025",
+      text: "#fab025",
+    },
+  
     success: {
       background: "#bce2be",
       text: "#339537",
@@ -247,6 +242,7 @@ const colors = {
     secondary: "#110e0e",
     info: "#00bbd4",
     success: "#4caf4f",
+    lightorange:"#fab025",
     warning: "#ff9900",
     error: "#f44336",
     light: "#adb5bd",

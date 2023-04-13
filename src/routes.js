@@ -1,5 +1,4 @@
 
-// Material Dashboard 2 React layouts
 import Dashboard from "layouts/dashboard";
 import Tables from "layouts/tables";
 import Billing from "layouts/billing";
@@ -13,6 +12,7 @@ import Icon from "@mui/material/Icon";
 import Department from "layouts/department";
 import Sports from "layouts/sports";
 import StudentDetails from "layouts/student";
+// import { NgController, NavGroup, NavItem } from "navgroups";
 
 const routes = [
   {
@@ -31,6 +31,7 @@ const routes = [
     route: "/tables",
     component: <Tables />,
   },
+  
   {
     name: "Profile",
     key: "profile",
@@ -82,3 +83,4 @@ const routes = [
 ];
 
 export default routes;
+

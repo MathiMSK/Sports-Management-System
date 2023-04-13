@@ -16,13 +16,22 @@ Coded by www.creative-tim.com
 import { useState } from "react";
 
 // react-router-dom components
-import { Link } from "react-router-dom";
-
+import { Link,useNavigate } from "react-router-dom";
+import { toast, Toaster } from "react-hot-toast";
 // @mui material components
+
+import IconButton from '@mui/material/IconButton';
+import { InputAdornment } from "@mui/material";
+import { RiEyeCloseFill} from 'react-icons/ri'
+import {IoEye} from 'react-icons/io5'
+// import VisibilityIcon from "@mui/icons-material/Visibility";
+// import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+
 import Card from "@mui/material/Card";
 import Switch from "@mui/material/Switch";
 import Grid from "@mui/material/Grid";
 import MuiLink from "@mui/material/Link";
+import SignInBG from "assets/images/SignInBG.jpg"
 
 // @mui icons
 import FacebookIcon from "@mui/icons-material/Facebook";
@@ -38,22 +47,69 @@ import MDButton from "components/MDButton";
 // Authentication layout components
 import BasicLayout from "layouts/authentication/components/BasicLayout";
 
-// Images
-import bgImage from "assets/images/bg-sign-in-basic.jpeg";
+import { userLogin,  getProfile,
+  //  getRoleMenuAccessById,
+   } from "utility/apiService";
 
-function Basic() {
+function SignIn() {
+
+  const navigate=useNavigate()
+
   const [rememberMe, setRememberMe] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
+  const handleMouseDownPassword = () => setShowPassword(!showPassword);
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
+  const handleSubmit = async (e) => {
+    if(email === ""){
+      setEmailError("Email is required");
+    }
+    else {
+      setEmailError("");
+    }
+    if(password === ""){
+      setPasswordError("Password is required");
+    } else{
+      setPasswordError("")
+    }
+    if( email !== "" && password !== ""){
+      const body = {
+        email: email,
+        password: password,
+      };
+      try {
+        const response = await userLogin(body);
+        console.log(response);
+        if (response.ok) {
+          toast.success(response.data.message);
+          localStorage.setItem("sems-token", JSON.stringify(response.data.token));
+          return navigate("/dashboard");
+      } else {
+        toast.error(response.data.message);
+      }
+      } catch (error) {
+        console.log(error);
+      }
+      
+    }
+  }
+
+
   return (
-    <BasicLayout image={bgImage}>
+    <BasicLayout image={SignInBG}>
       <Card>
         <MDBox
           variant="gradient"
-          bgColor="info"
+          style={{backgroundColor:'#fab025',color:"white"}}
           borderRadius="lg"
-          coloredShadow="info"
+          coloredShadow="info" 
           mx={2}
           mt={-3}
           p={2}
@@ -66,17 +122,17 @@ function Basic() {
           <Grid container spacing={3} justifyContent="center" sx={{ mt: 1, mb: 2 }}>
             <Grid item xs={2}>
               <MDTypography component={MuiLink} href="#" variant="body1" color="white">
-                <FacebookIcon color="inherit" />
+                <FacebookIcon color="inherit" ></FacebookIcon>
               </MDTypography>
             </Grid>
             <Grid item xs={2}>
               <MDTypography component={MuiLink} href="#" variant="body1" color="white">
-                <GitHubIcon color="inherit" />
+                <GitHubIcon color="inherit" ></GitHubIcon>
               </MDTypography>
             </Grid>
             <Grid item xs={2}>
               <MDTypography component={MuiLink} href="#" variant="body1" color="white">
-                <GoogleIcon color="inherit" />
+                <GoogleIcon color="inherit" ></GoogleIcon>
               </MDTypography>
             </Grid>
           </Grid>
@@ -84,13 +140,61 @@ function Basic() {
         <MDBox pt={4} pb={3} px={3}>
           <MDBox component="form" role="form">
             <MDBox mb={2}>
-              <MDInput type="email" label="Email" fullWidth />
+              <MDInput type="email" label="Email" fullWidth 
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          ></MDInput>
+                           {emailError ? (
+                    <p
+                      style={{
+                        paddingLeft: "14px",
+                        color: "red",
+                        fontSize: "14px",
+                      }}
+                      color="red"
+                    >
+                      {emailError}
+                    </p>
+                  ) : null}
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="password" label="Password" fullWidth />
+              <MDInput 
+                type={showPassword ? "text" : "password"} 
+               label="Password" fullWidth  
+                 value={password}
+                  onChange={(e) =>
+                      setPassword(e.target.value )
+                    }
+                    InputProps={{
+                      // <-- This is where the toggle button is added.
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                          >
+                            {showPassword ? <IoEye /> : <RiEyeCloseFill />}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+              ></MDInput>
+                {passwordError ? (
+                    <p
+                      style={{
+                        paddingLeft: "14px",
+                        color: "red",
+                        fontSize: "14px",
+                      }}
+                      color="red"
+                    >
+                      {passwordError}
+                    </p>
+                  ) : null}
             </MDBox>
             <MDBox display="flex" alignItems="center" ml={-1}>
-              <Switch checked={rememberMe} onChange={handleSetRememberMe} />
+              <Switch checked={rememberMe} onChange={handleSetRememberMe} ></Switch>
               <MDTypography
                 variant="button"
                 fontWeight="regular"
@@ -101,8 +205,10 @@ function Basic() {
                 &nbsp;&nbsp;Remember me
               </MDTypography>
             </MDBox>
+
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" fullWidth>
+              <MDButton variant="gradient" style={{backgroundColor:'#fab025',color:"white"}}   
+                 onClick={handleSubmit} fullWidth>
                 sign in
               </MDButton>
             </MDBox>
@@ -113,9 +219,10 @@ function Basic() {
                   component={Link}
                   to="/authentication/sign-up"
                   variant="button"
-                  color="info"
+                  color="lightorange"
                   fontWeight="medium"
                   textGradient
+             
                 >
                   Sign up
                 </MDTypography>
@@ -124,8 +231,9 @@ function Basic() {
           </MDBox>
         </MDBox>
       </Card>
+      <Toaster/>
     </BasicLayout>
   );
 }
 
-export default Basic;
+export default SignIn;

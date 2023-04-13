@@ -102,17 +102,38 @@ const handleSubmit = async (e) => {
   if(firstName === ""){
     setFirstNameError("First Name is required");
   }
+  else{
+    setFirstNameError("")
+  }
   if(lastName === ""){
     setLastNameError("Last Name is required");
   }
-  if(email === ""){
+  else{
+    setLastNameError("")
+  }
+  if(email === " "){
     setEmailError("Email is required");
+  }
+  else if (!/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{3}$/.test(email)) {
+     setEmailError("Email is invalid");
+  } 
+  else {
+    setEmailError("");
   }
   if(mobileNo === ""){
     setMobileNoError("Mobile No is required");
   }
+  else if (!/^\d{10}$/.test(mobileNo)) {
+    setMobileNoError("Must be 10 digit");
+  }
+  else{
+    setMobileNoError("")
+  }
   if(password === ""){
     setPasswordError("Password is required");
+  }
+  else{
+    setPasswordError("")
   }
   if(firstName !== "" && lastName !== "" && email !== "" && mobileNo !== "" && password !== ""){
     const body = {
@@ -151,7 +172,7 @@ const handleSubmit = async (e) => {
     backgroundImage: `url(${SignUpBG1})`,
     backgroundSize: "cover",
    }}>
-    <CoverLayout  >
+    <CoverLayout image="" >
                <div >
         <Particles options={party} init={particlesInit} />
       </div>
@@ -297,7 +318,7 @@ const handleSubmit = async (e) => {
                   component={Link}
                   to="/authentication/sign-in"
                   variant="button"
-                  color="info"
+                  color="lightorange"
                   fontWeight="medium"
                   textGradient
                 >
