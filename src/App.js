@@ -9,7 +9,8 @@ import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Icon from "@mui/material/Icon";
-
+import SignIn from "layouts/authentication/sign-in";
+import Dashboard from "layouts/dashboard";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 
@@ -29,7 +30,8 @@ import themeDarkRTL from "assets/theme-dark/theme-rtl";
 import rtlPlugin from "stylis-plugin-rtl";
 import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
-
+import Page404 from "layouts/authentication/page404/Page404.js";
+import Page500 from "layouts/authentication/page500/Page500.js";
 // Material Dashboard 2 React routes
 import routes from "routes";
 // Material Dashboard 2 React contexts
