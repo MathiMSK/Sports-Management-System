@@ -11,7 +11,7 @@ import Creation from "layouts/creation";
 // @mui icons
 import Icon from "@mui/material/Icon";
 import Department from "layouts/department";
-import Sports from "layouts/sports";
+import Event from "layouts/event";
 import StudentDetails from "layouts/student";
 // import { NgController, NavGroup, NavItem } from "navgroups";
 
@@ -23,16 +23,7 @@ const routes = [
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
     component: <Dashboard />,
-  },
-  {
-    type: "collapse",
-    name: "Tables",
-    key: "tables",
-    icon: <Icon fontSize="small">table_view</Icon>,
-    route: "/tables",
-    component: <Tables />,
-  },
-  
+  },  
   {
     name: "Profile",
     key: "profile",
@@ -42,15 +33,22 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Sports",
-    key: "sports",
+    name: "Creation",
+    key: "creation",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/creation",
+    component: <Creation />,
+  },
+  {
+    type: "collapse",
+    name: "Event",
+    key: "event",
     icon: <Icon fontSize="small">receipt_long</Icon>,
-    route: "/sports",
-    component: <Sports />,
+    route: "/event",
+    component: <Event />,
   },
  
   {
-    type: "collapse",
     name: "Students",
     key: "students",
     icon: <Icon fontSize="small">notifications</Icon>,
@@ -58,7 +56,6 @@ const routes = [
     component: <StudentDetails />,
   },
   {
-    type: "collapse",
     name: "Department",
     key: "department",
     icon: <Icon fontSize="small">person</Icon>,
@@ -66,7 +63,6 @@ const routes = [
     component: <Department />,
   },
   {
-    type: "collapse",
     name: "Sign In",
     key: "sign-in",
     icon: <Icon fontSize="small">login</Icon>,
@@ -74,21 +70,13 @@ const routes = [
     component: <SignIn />,
   },
   {
-    type: "collapse",
     name: "Sign Up",
     key: "sign-up",
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/authentication/sign-up",
     component: <SignUp />,
   },
-  {
-    type: "collapse",
-    name: "Creation",
-    key: "creation",
-    icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/creation",
-    component: <Creation />,
-  },
+
 ];
 
 export default routes;

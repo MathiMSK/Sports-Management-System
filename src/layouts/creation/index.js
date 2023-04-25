@@ -1,13 +1,18 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Card, CardFooter } from "reactstrap";
 import Department from "../../assets/images/logos/rvs.jpg";
-import Sports from "../../assets/images/SigUpBG1.png";
+import Sports from "../../assets/images/logos/sports.jpg";
+import Map from "../../assets/images/logos/map.jpg";
+import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
+import DashboardNavbar from 'examples/Navbars/DashboardNavbar';
 import "./styles.css";
-import OwnerCreation from "./Department/index";
-import SportsCreation from "./Sports/FoodRequest";
+import OwnerCreation from "./Essentials/index";
+import SportsCreation from "./Sports/index";
+import RMMapping from "./Mapping/index"
 const Creation = () => {
   const [creating, setCreating] = useState(false);
   const [sports, setSports] = useState(false);
+  const [map, setMap] = useState(false);
   const onMouseEnter = (e) => {
     e.target.style.transform = "scale(1.05)";
     e.target.style.transition = "all 0.3s ease-in-out";
@@ -19,7 +24,9 @@ const Creation = () => {
   
   return (
     <>
-      <div
+     <DashboardLayout>
+        <DashboardNavbar />
+       <div
         style={{
           width: "100%",
           minHeight: "calc(100vh - 190px)",
@@ -49,14 +56,12 @@ const Creation = () => {
              
                 
               >
-                <img src={Sports} className={"cardImg"} style={{
-                  width: "100%",
-                  height: "100%",
-                }} />
+                     <img src={Department} className={"cardImg"} />
+               
                 <b
                   style={{
                     position: "absolute",
-                    marginLeft: "32%",
+                    marginLeft: "34%",
                     marginTop: "22%",
                     fontSize: 20,
                     padding: 2,
@@ -78,15 +83,11 @@ const Creation = () => {
                 onMouseLeave={(e) => onMouseLeave(e)}
                 className={"cardout"}
               >
-                <img src={Department} className={"cardImg"} 
-                style={{
-                  width: "100%",
-                  height: "50%",
-                }}  />
+               <img src={Sports} className={"cardImg"}  />
                 <b
                   style={{
                     position: "absolute",
-                    marginLeft: "32%",
+                    marginLeft: "40%",
                     marginTop: "22%",
                     fontSize: 20,
                     padding: 2,
@@ -98,34 +99,38 @@ const Creation = () => {
                 </b>
               </Card>
             </Col>
-            {/* <Col md={4}>
+            <Col md={4}>
               <Card
-                onClick={() => setIt(!it)}
+                onClick={() => setMap(!map)}
                 onMouseOver={(e) => onMouseEnter(e)}
                 onMouseLeave={(e) => onMouseLeave(e)}
                 className={"cardout"}
               >
-                <img src={It} className={"cardImg"}/>
+                <img src={Map} className={"cardImg"} 
+                />
                 <b
                   style={{
                     position: "absolute",
-                    marginLeft: "36%",
+                    marginLeft: "38%",
                     marginTop: "22%",
                     fontSize: 20,
                     padding: 2,
+                    color:'black'
                   }}
                   className={"title"}
                 >
-                  IT Request
+                  Mapping
                 </b>
               </Card>
-            </Col> */}
+            </Col>
+          
           </Row>
         </Container>
       </div>
       {creating && <OwnerCreation open={creating} setOpen={setCreating}   />}
       {sports && <SportsCreation open={sports} setOpen={setSports}  />}
-      {/* {it && <ItRequest open={it} setOpen={setIt} menuId={menuId} />} */}
+      {map && <RMMapping open={map} setOpen={setMap}  />}
+      </DashboardLayout>
     </>
   );
 };

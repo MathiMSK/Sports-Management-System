@@ -191,12 +191,12 @@ export default function App() {
         </>
       )}
       {layout === "vr" && <Configurator />}
-      <Suspense fallback={loading}>
+     
       <Routes>
         {getRoutes(routes)}
-        {!token && <Route path="*" element={<Navigate to="/authentication/sign-in" />} />}
+       <Route path="*" element={<Navigate to="/authentication/sign-in" />} />
       </Routes>
-      </Suspense>
+      
     </ThemeProvider>
   );
 }

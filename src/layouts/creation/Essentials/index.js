@@ -16,25 +16,17 @@ import { Card, Col, Form, FormGroup, Label, Row } from "reactstrap";
 //   updateAssetRequest,
 // } from "src/utility/apiService";
 import CustomSelect from "../../../custom/Select";
-import Allreq from "./allreq";
+import Role from "./Role";
+import Department from "./Department";
 import jwt_decode from "jwt-decode";
 // import { RoleMenuAccessContext } from "src/context/roleMenuAccessContext";
 
-const AssetRequest = (props) => {
+const Essentials = (props) => {
   const { open, setOpen } = props;
   const [data, setData] = useState([]);
   const [modal, setModal] = useState(false);
   const [modal1, setModal1] = useState(false);
-
-  const [assetType, setAssetType] = useState("");
-  const [reason, setReason] = useState("");
-  const [selected, setSelected] = useState();
-  const [getAccess, setGetAccess] = useState();
   const [open1, setOpen1] = useState(false);
-
-  const [assetTypeError, setAssetTypeError] = useState("");
-  const [reasonError, setReasonError] = useState("");
-  const [user, setUser] = useState("");
 
   const [columns, setColumns] = useState([
     {
@@ -74,138 +66,10 @@ const AssetRequest = (props) => {
 
   const toggle = () => setOpen1(!open1);
 
-  // let roleMenuAccess = useContext(RoleMenuAccessContext);
-
-  // useEffect(() => {
-  //   let fetchData = async () => {
-  //     try {
-  //       let res = await getAccessForMenu(roleMenuAccess?.roleId);
-  //       setGetAccess(res.data.data);
-  //     } catch (error) {
-  //       console.log(error.message);
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
-
-  // const aNameData = async () => {
-  //   try {
-  //     let response = await getAllStoreAssets();
-  //     let arr = [];
-  //     response?.data?.map((item, index) => {
-  //       arr.push({
-  //         id: item._id,
-  //         value: item.assetsName,
-  //         label: item.assetsName,
-  //       });
-  //       setAssetType(arr);
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // let token = JSON.parse(localStorage.getItem("hrmsv2-token"));
-  // var decoded = jwt_decode(token);
-
-  // const userData = async () => {
-  //   try {
-  //     let response = await getAllUsers();
-  //     let arr = [];
-  //     response.data?.data.map((item) => {
-  //       if (item._id == decoded.id) {
-  //         arr.push({
-  //           id: item._id,
-  //           value: item.firstName + " " + item.lastName,
-  //           label: item.firstName + " " + item.lastName,
-  //         });
-  //       }
-  //       setUser(arr);
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   aNameData();
-  //   userData();
-
-  //   const getAssetreq = async () => {
-  //     try {
-  //       let response = await getUserAssetRequests();
-  //       const user = await getUserById(decoded.id);
-
-  //       let arr = [];
-  //       response.data.data?.map(async (item, index) => {
-  //         arr.push({
-  //           ...item,
-  //           employeeName:
-  //             user.data.data.firstName + " " + user.data.data.lastName,
-  //           assetType: item?.storeId?.assetsName,
-  //           date: (
-  //             <center>{new Date(item.createdAt).toLocaleDateString()}</center>
-  //           ),
-  //           status: (
-  //             <center>
-  //               <h6
-  //                 style={{
-  //                   color:
-  //                     item.status == "Pending"
-  //                       ? "orange"
-  //                       : item.status == "Approved"
-  //                       ? "green"
-  //                       : "red",
-  //                 }}
-  //               >
-  //                 {item.status}
-  //               </h6>
-  //             </center>
-  //           ),
-  //         });
-  //       });
-  //       setData(arr);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   getAssetreq();
-  // }, [modal1, open1,getAccess]);
-
-  // const handleSubmit = async () => {
-  //   if (!selected) {
-  //     setAssetTypeError("Asset Type is required!");
-  //   } else {
-  //     setAssetTypeError("");
-  //   }
-  //   if (!reason) {
-  //     setReasonError("Reason is required!");
-  //   } else {
-  //     setReasonError("");
-  //   }
-  //   if (!selected && !reason) {
-  //     console.log("error");
-  //   } else {
-  //     let obj = {
-  //       storeId: selected?.id,
-  //       appReason: reason,
-  //       status: "Pending",
-  //       menuId,
-  //     };
-  //     let response = await createAssetRequest(obj);
-  //     try {
-  //       if (response.ok) {
-  //         toast.success(response.data?.message);
-  //         setOpen1(!open1);
-  //       } else toast.error(response.data?.message);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-  // };
 
   return (
     <>
+    
       <div
         style={{
           width: "100%",
@@ -213,13 +77,14 @@ const AssetRequest = (props) => {
           backgroundColor: "white",
           borderRadius: "20px",
           position: "absolute",
-          top: "0",
+          top: "15%",
           marginRight: "30px",
           maxWidth: "-webkit-fill-available",
           zIndex: "5",
           height: "100%",
         }}
       >
+       
         {!modal1 ? (
           <>
             {!modal ? (
@@ -266,7 +131,9 @@ const AssetRequest = (props) => {
                               <Label className="in-box">Role</Label>
                             </Card>
                           </Col>
-                          {/* ):null} */}
+                      
+                         
+                          
                         </Row>
                       </CContainer>
                     </CContainer>
@@ -285,8 +152,9 @@ const AssetRequest = (props) => {
                   </>
                 ) : (
                   <>
-                    <div>
-                      <div
+                    {/* <div> */}
+                      <Department open={open1} setOpen={setOpen1} />
+                      {/* <div
                         style={{
                           flexDirection: "row",
                           position: "relative",
@@ -318,7 +186,7 @@ const AssetRequest = (props) => {
                               paddingRight: "0px",
                             }}
                           >
-                            Create Request
+                            Create Department
                           </h1>
                         </CContainer>
                       </div>
@@ -335,82 +203,14 @@ const AssetRequest = (props) => {
                           style={{ marginLeft: "3.2rem" }}
                         >
                           <Row>
-                            <Col
-                              md={6}
-                              className="cusInpCon"
-                              style={{ minWidth: "300px", maxWidth: "300px" }}
-                            >
-                              {" "}
-                              <FormGroup>
-                                <Label>
-                                  User
-                                  <span
-                                    style={{
-                                      paddingLeft: "5px",
-                                      color: "red",
-                                      fontSize: "15px",
-                                    }}
-                                  >
-                                    *
-                                  </span>
-                                </Label>
-
-                                <CustomSelect
-                                  widthForSelect="100%"
-                                  placeholder={"User"}
-                                  selectedOptions={user}
-                                  isSearchable={true}
-                                  isMulti={false}
-                                  disabled={true}
-                                  star={"*"}
-                                  width="300px"
-                                />
-                              </FormGroup>
-                            </Col>
-                            <Col
-                              md={6}
-                              className="cusInpCon"
-                              style={{ minWidth: "300px", maxWidth: "300px" }}
-                            >
-                              {" "}
-                              <FormGroup>
-                                <Label>
-                                  Select the Asset Type
-                                  <span
-                                    style={{
-                                      paddingLeft: "5px",
-                                      color: "red",
-                                      fontSize: "15px",
-                                    }}
-                                  >
-                                    *
-                                  </span>
-                                </Label>
-
-                                <CustomSelect
-                                  option={assetType}
-                                  selectedOptions={selected}
-                                  setSelectedOptions={setSelected}
-                                  isSearchable={true}
-                                  isMulti={false}
-                                  placeholder={"Select The Asset Type"}
-                                  style={{ marginButtom: "0.5rem" }}
-                                />
-                              </FormGroup>
-                              {assetTypeError ? (
-                                <Typography1 style={{ color: "red" }}>
-                                  {assetTypeError}
-                                </Typography1>
-                              ) : null}
-                            </Col>
-
+                          
                             <Col
                               md={6}
                               className="cusInpCon"
                               style={{ minWidth: "300px", maxWidth: "300px" }}
                             >
                               <Label>
-                                Reason
+                                Department Name
                                 <span
                                   style={{
                                     paddingLeft: "5px",
@@ -423,22 +223,22 @@ const AssetRequest = (props) => {
                               </Label>
                               <CFormInput
                                 id="exampleFormControlInput1"
-                                placeholder="Enter Reason"
+                                placeholder="Enter Department Name"
                                 // value={des}
-                                onChange={(e) => setReason(e.target.value)}
+                                onChange={(e) => setDepartment(e.target.value)}
                               />
-                              {reasonError ? (
+                              {departmentError ? (
                                 <Typography1
                                   style={{ color: "red", marginTop: "15px" }}
                                 >
-                                  {reasonError}
+                                  {departmentError}
                                 </Typography1>
                               ) : null}
                             </Col>
                           </Row>
                         </CContainer>
-                      </div>
-                      <Box
+                      </div> */}
+                      {/* <Box
                         mt={"30px"}
                         sx={{
                           display: "flex",
@@ -475,15 +275,16 @@ const AssetRequest = (props) => {
                           Submit
                         </Button>
                       </Box>
-                    </div>
+                    </div> */}
                   </>
                 )}
               </>
             ) : null}
           </>
         ) : (
-          <Allreq open={modal1} setOpen={setModal1} />
+          <Role open={modal1} setOpen={setModal1} />
         )}
+        
       </div>
       <Toaster />
       {/* {gridModal && (
@@ -498,4 +299,4 @@ const AssetRequest = (props) => {
   );
 };
 
-export default AssetRequest;
+export default Essentials;
