@@ -1,1 +1,1 @@
-SEMS Server
+SEMS Frontend
