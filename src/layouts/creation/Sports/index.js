@@ -365,7 +365,7 @@ const Sports = (props) => {
                                              <Col md={6}>
                                                   <MDBox sx={{ paddingLeft: '55px' }}>
                                                        <CustomSelect
-                                                            name={'Depatment'}
+                                                            name={'Gender'}
                                                             placeholder={'Select Gender '}
                                                             isSearchable={true}
                                                             isMulti={false}

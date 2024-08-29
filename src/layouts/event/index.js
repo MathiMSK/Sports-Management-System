@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DashboardLayout from 'examples/LayoutContainers/DashboardLayout';
 // import EnhancedTable from 'components/CustomTable';
 import MDButton from 'components/MDButton';
+import { toast, Toaster } from 'react-hot-toast';
 import { useMaterialUIController } from 'context';
 import MDTypography from 'components/MDTypography';
 import { Link, useNavigate } from 'react-router-dom';
@@ -14,13 +15,23 @@ import CustomSelect from 'custom/Select';
 import { Row, Col } from 'reactstrap';
 import { Container } from '@mui/system';
 import CustomTable from 'custom/Table';
+import { getAllSports,getallGender } from 'utility/apiService';
+import { createEvent } from 'utility/apiService';
+import { getAllEvent } from 'utility/apiService';
 const Event = () => {
      let textColor = 'white';
      const navigation = useNavigate();
      const [open, setOpen] = useState(false);
      const [controller] = useMaterialUIController();
      const { miniSidenav, transparentSidenav, whiteSidenav, darkMode, sidenavColor } = controller;
-
+     const [event,setEvent] = useState("")
+     const [gender,setGender] = useState("")
+     const [sports,setSports] = useState("")
+     const [selected,setSelected] = useState('')
+     const [selected1,setSelected1] = useState('')
+     const [genderErr, setGenderErr] = useState('');
+     const [eventNameErr, setEventNameErr    ] = useState('');
+     const [sportsErr, setSportsErr] = useState('');
      let color;
      if (sidenavColor == 'info') color = 'blue';
      else if (sidenavColor == 'error') color = 'red';
@@ -38,28 +49,19 @@ const Event = () => {
                accessor: (row, index) => <div style={{ textAlign: 'center' }}>{index + 1}</div>,
           },
           {
+               Header: 'Event',
+               accessor: 'eventName',
+          },
+          {
                Header: 'Sports Name',
-               accessor: 'roleName',
-          },
-          {
-               Header: 'Sports Code',
-               accessor: 'roleCode',
-          },
-          {
-               Header: 'Gender',
-               accessor: 'status',
-               disableSortBy: true,
+               accessor: 'sportsName',
           },
           {
                Header: 'Date',
                accessor: 'date',
                disableSortBy: true,
           },
-          {
-               Header: 'Delete',
-               accessor: 'delete',
-               disableSortBy: true,
-          },
+      
      ];
 
      if (transparentSidenav || (whiteSidenav && !darkMode)) {
@@ -67,6 +69,99 @@ const Event = () => {
      } else if (darkMode) {
           textColor = 'inherit';
      }
+     const eventData = async () => {
+          try {
+            let response = await getAllEvent();
+            let arr = [];
+            response.data.data?.map((item, index) => {
+               console.log(item);
+              if (item.isBlock == false) {
+                arr.push({
+                  ...item ,
+                  sportsName:item.sportsId.sportsName,
+                  date:item.Date              
+                });
+              }
+              
+            });
+            setData(arr);
+          } catch (error) {
+            console.log(error);
+          }
+        };
+        
+
+     const handlegenspo = async () => {
+          const Gender = await getallGender();
+          const GenderData = Gender.data?.data?.filter((item) => {
+            return item.isBlock === false;
+          });
+      
+          setGender(
+            GenderData.map((item) => {
+              return {
+                value: item.genderName || "",
+                label: item.genderName || "",
+                genderId: item._id || "",
+              };
+            })
+          );
+          let sports = await getAllSports();
+          const sportsData = sports.data?.data.filter((item) => {
+            return item.isBlock === false
+           
+          });
+        
+            setSports(
+              sportsData?.map((item) => {
+                return {
+                  value: item.sportsName || "",
+                  label: item.sportsName || "",
+                  sportsId: item._id || "",
+                };
+              })
+            );
+        };
+        
+          useEffect(() => {
+               eventData();
+          handlegenspo();
+            }, []);
+     
+     const handleSubmit = async () => {
+          if (!selected) {
+               return setGenderErr('Gender is required');
+          }
+          else{
+               setGenderErr('');
+          }
+          if (!selected1) {
+               return setSportsErr('Sports is required');
+          }
+          else{
+               setSportsErr('');
+          }  
+          if (!event) {
+               return setEventNameErr('Event Name is required');
+          }
+          else{
+               setEventNameErr('');
+          }  
+          if (selected && selected1 && event) {
+          try {
+               let response = await createEvent(selected.genderId,selected1.sportsId,{ eventName: event });
+               if (!response.ok) {
+                    return toast.error(response.data.message);
+               }
+               toast.success(response.data.message);
+               setOpen(!open);
+          } catch (error) {
+               console.log(error);
+          }
+     }};
+
+
+
 
      return (
           <DashboardLayout>
@@ -138,35 +233,52 @@ const Event = () => {
                                              marginRight: '5rem',
                                         }}>
                                         <Container>
-                                             <Row
-                                                  style={{
-                                                       display: 'flex',
-                                                       justifyContent: 'space-between',
-                                                  }}>
-                                                  <Col md={6}>
-                                                       <MDBox sx={{ paddingLeft: '55px' }}>
-                                                            <CustomSelect name={'Gender'} 
-                                                            placeholder={'select gender'}
-                                                            ></CustomSelect>
-                                                       </MDBox>
-                                                  </Col>
-                                                  <Col md={6}>
-                                                       {/* <MDBox sx={{paddingLeft:"55px",padding:"55px"}}>  */}
-                                                       <CustomInput
-                                                            name={'Event Name'}
-                                                            type='text'
-                                                            style={{ width: '300px', marginTop: '5px' }}
-                                                            placeholder={'Enter Event name'}
-                                                       />
-                                                       {/* </MDBox> */}
-                                                  </Col>
+                                             <Row >
+                                             <Col md={6}>
+                                                  <CustomInput
+                                                       name={'Event Name'}
+                                                       placeholder={'Enter Event name'}
+                                                       style={{ width: '245px', marginTop: '5px' }}
+                                                       value={event}
+                                                       onChange={(e) => setEvent(e.target.value)}
+                                                  />
+                                                   {eventNameErr ? <p style={{ color: 'red' }}>{eventNameErr}</p> : null}
+                                                 
+                                             </Col>
+                                                 <Col md={6}>
+                                                  <MDBox sx={{ paddingLeft: '20px' }}>
+                                                       <CustomSelect
+                                                            name={'Gender'}
+                                                            placeholder={'Select Gender '}
+                                                            isSearchable={true}
+                                                            isMulti={false}
+                                                            option={gender}
+                                                            selectedOptions={selected}
+                                                            setSelectedOptions={setSelected}/> 
+                                                             {genderErr ? <p style={{ color: 'red' }}>{genderErr}</p> : null}
+                                                  </MDBox>
+                                             </Col>
+                                             <Col md={6}>
+                                                  <MDBox sx={{ paddingLeft: '20px' }}>
+                                                       <CustomSelect
+                                                            name={'Sports'}
+                                                            placeholder={'Select Sports '}
+                                                            isSearchable={true}
+                                                            isMulti={false}
+                                                            option={sports}
+                                                            selectedOptions={selected1}
+                                                            setSelectedOptions={setSelected1}/> 
+                                                             {sportsErr ? <p style={{ color: 'red' }}>{sportsErr}</p> : null}
+                                                  </MDBox>
+                                             </Col>
+                                            
                                              </Row>
                                         </Container>
                                    </div>
                                    {/* </MDBox> */}
 
                                    <MDBox
-                                        mt={'30px'}
+                                        mt={'60px'}
                                         sx={{
                                              display: 'flex',
                                              flexDirection: 'row',
@@ -186,16 +298,18 @@ const Event = () => {
                                              variant='contained'
                                              aria-label='fingerprint'
                                              sx={{ display: 'flex', margin: '15px', alignSelf: 'left' }}
-                                             color={sidenavColor}>
+                                             color={sidenavColor}
+                                             onClick={handleSubmit}>
                                              Submit
                                         </MDButton>
                                    </MDBox>
                               </MDBox>
                          </>
                     )}
+                    <Toaster/>
                </div>
           </DashboardLayout>
      );
 };
 
-export default Event;
+export default Event

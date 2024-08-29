@@ -29,16 +29,7 @@ const Department = () => {
      else if (sidenavColor == 'success') color = 'green';
      else if (sidenavColor == 'primary') color = 'pink';
      else if (sidenavColor == 'dark') color = 'black';
-     const students = [
-          { id: 1, role: 'Admin', name: 'Kakashi' },
-          { id: 2, role: 'HR', name: 'Shikamaru' },
-          { id: 3, role: 'Super Admin', name: 'Sasuke' },
-          { id: 4, role: 'Pro Admin', name: 'Naruto' },
-     ];
-     let row = [];
-     students.map((i) => {
-          row.push({ role: i.role, name: i.name });
-     });
+  
      const [data, setData] = useState([]);
 
      let columns = [

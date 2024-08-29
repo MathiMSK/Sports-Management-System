@@ -31,7 +31,7 @@ export const getAllUsers = async (menuId) => {
     method: "GET",
     headers: { "Content-Type": "application/json" },
   };
-  const response = await fetch(`${baseUrl}user/getalluser?menuId=${menuId}`, requestOptions);
+  const response = await fetch(`${baseUrl}user/getalluser`, requestOptions);
   if (!response.ok) {
     let data = await response?.json();
     return { data: data, ok: false };
@@ -878,6 +878,110 @@ export const getSportsById = async (id) => {
   };
   const response = await fetch(
     `${baseUrl}owner/sports/getsportsbyid?id=${id}`,
+    requestOptions
+  );
+  if (!response.ok) {
+    let data = await response?.json();
+    return { data: data, ok: false };
+  }
+  let data = await response?.json();
+  return { data: data, ok: true };
+}
+
+//Event Controller
+
+export const createEvent = async (genderId,sportsId,body) => {
+  let token = localStorage.getItem("sems-token");
+  if (token) {
+    token = JSON.parse(token);
+  }
+  const requestOptions = {
+    method: "POST",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "sems-auth-token": token,
+    },
+    body: JSON.stringify(body),
+  };
+  const response = await fetch(
+    `${baseUrl}event/createevent?genderId=${genderId}&sportsId=${sportsId}`,
+    requestOptions
+  );
+  if (!response.ok) {
+    let data = await response.json();
+    return { data: data, ok: false };
+  }
+  let data = await response?.json();
+  return { data: data, ok: true };
+}
+
+export const getAllEvent = async () => {
+  let token = localStorage.getItem("sems-token");
+  if (token) {
+    token = JSON.parse(token);
+  }
+  const requestOptions = {
+    method: "GET",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "sems-auth-token": token,
+    },
+  };
+  const response = await fetch(
+    `${baseUrl}event/getallevent`,
+    requestOptions
+  );
+  if (!response.ok) {
+    let data = await response?.json();
+    return { data: data, ok: false };
+  }
+  let data = await response?.json();
+  return { data: data, ok: true };
+}
+
+export const updateEvent = async (id, body) => {
+  let token = localStorage.getItem("sems-token");
+  if (token) {
+    token = JSON.parse(token);
+  }
+  const requestOptions = {
+    method: "PUT",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "sems-auth-token": token,
+    },
+    body: JSON.stringify(body),
+  };
+  const response = await fetch(
+    `${baseUrl}event/updateevent?id=${id}`,
+    requestOptions
+  );
+  if (!response.ok) {
+    let data = await response?.json();
+    return { data: data, ok: false };
+  }
+  let data = await response?.json();
+  return { data: data, ok: true };
+}
+
+export const getEventById = async (id) => {
+  let token = localStorage.getItem("sems-token");
+  if (token) {
+    token = JSON.parse(token);
+  }
+  const requestOptions = {
+    method: "GET",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "sems-auth-token": token,
+    },
+  };
+  const response = await fetch(
+    `${baseUrl}event/geteventbyid?id=${id}`,
     requestOptions
   );
   if (!response.ok) {

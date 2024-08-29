@@ -77,7 +77,7 @@ function SignIn() {
                     if (response.ok) {
                          toast.success(response.data.message);
                          localStorage.setItem('sems-token', JSON.stringify(response.data.token));
-                         return navigate('/dashboard');
+                         return navigate('/event');
                     } else {
                          toast.error(response.data.message);
                     }
